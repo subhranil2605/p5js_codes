@@ -1,0 +1,13 @@
+main {
+    display: flex;
+    justify-content: center;
+}
+
+h1.heading {
+    display: flex;
+    justify-content: center;
+}
+
+h1.algo {
+    font-size: 1.5em;
+}
