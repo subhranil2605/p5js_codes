@@ -1,14 +1,15 @@
 class Node {
   constructor(state, parent = null, action = null) {
-    this.state = state;
-    this.parent = parent;
-    this.action = action;
-    this.visited = false;
+    this.state = state;     // current state of the node. in this case it is the p5vector of the index in the 2D graph
+    this.parent = parent;   // parent of the node. After expanding the node, all the child have the parent of the node.
+    this.action = action;   // the next neighbor to be visited
+    this.visited = false;   // for the purpose of coloring the node if it is expanded or not
   }
-
+  
+  // expand the node according to the problem 
   expand(problem) {
     var result = [];
-    for (var action of problem.actions(this.state)) {
+    for (var action of problem.actions(this.state)) {     // problem.actions() gives the neighbors; top, right, bottom, left if exists
       result.push(this.childNode(problem, action));
     }
     return result;
@@ -18,19 +19,21 @@ class Node {
     var neighbors = this.expand(problem);
     return neighbors[floor(random() * neighbors.length)];
   }
-
+  
+  // creating the child node with the node as the parent and according to the problem
   childNode(problem, action) {
     var nextState = problem.result(this.state, action);
     var nextNode = new Node(nextState, this, action);
     return nextNode;
   }
-
+  
+  // returns the path from the current child to its all parents. and returns the reverse of it
   path() {
-    var node = this;
+    var node = this;    // current node
     var pathBack = [];
     while (node) {
       pathBack.push(node);
-      node = node.parent;
+      node = node.parent;   // now the current node changed to its parent
     }
     return pathBack.reverse();
   }
