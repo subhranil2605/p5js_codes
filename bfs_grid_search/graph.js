@@ -13,19 +13,20 @@ class Graph {
   }
 
   makeUndirected() {
-    for (var parent of Object.keys(this.graphDict)) {
-      for (var child of this.graphDict[parent]) {
-        if (child in this.graphDict) {
-          if (!this.graphDict[child].includes(parent)) {
+    for (var parent of Object.keys(this.graphDict)) {     // each key in the graphdict
+      for (var child of this.graphDict[parent]) {         // each value from the value list
+        if (child in this.graphDict) {                    // if child exists in the key list
+          if (!this.graphDict[child].includes(parent)) {  // if that child's value doesn't contain the parent
             this.connect(child, parent);
           }
-        } else {
+        } else {                                          // if the child is not in the graph.. tadaaa! your undirected graph is ready!!!!
           this.connect(child, parent);
         }
       }
     }
   }
-
+  
+  // making connection between two nodes in the graph
   connect(A, B) {
     setDefault(this.graphDict, A, []).push(B);
   }
@@ -44,10 +45,13 @@ class Graph {
   }
 }
 
+// making a undirected graph and returns teh Graph instance
 function UndirectedGraph(graphDict = null) {
   return new Graph(graphDict, false);
 }
 
+// just like the pyhton dictionary setdefault() method. 
+// it just return the value of the key given, if not create a default value to null or given
 function setDefault(dict, key, value = null) {
   if (dict[key]) {
     return dict[key];
